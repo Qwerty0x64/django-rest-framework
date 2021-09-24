@@ -82,7 +82,7 @@ setup(
     author_email='tom@tomchristie.com',  # SEE NOTE BELOW (*)
     packages=find_packages(exclude=['tests*']),
     include_package_data=True,
-    install_requires=["django>=2.2"],
+    install_requires=["django>=2.2", "pytz"],
     python_requires=">=3.5",
     zip_safe=False,
     classifiers=[
@@ -109,6 +109,7 @@ setup(
     project_urls={
         'Funding': 'https://fund.django-rest-framework.org/topics/funding/',
         'Source': 'https://github.com/encode/django-rest-framework',
+        'Changelog': 'https://www.django-rest-framework.org/community/release-notes/',
     },
 )
 

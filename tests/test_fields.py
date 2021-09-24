@@ -1220,12 +1220,12 @@ class TestNoStringCoercionDecimalField(FieldValues):
 
 
 class TestLocalizedDecimalField(TestCase):
-    @override_settings(USE_L10N=True, LANGUAGE_CODE='pl')
+    @override_settings(LANGUAGE_CODE='pl')
     def test_to_internal_value(self):
         field = serializers.DecimalField(max_digits=2, decimal_places=1, localize=True)
         assert field.to_internal_value('1,1') == Decimal('1.1')
 
-    @override_settings(USE_L10N=True, LANGUAGE_CODE='pl')
+    @override_settings(LANGUAGE_CODE='pl')
     def test_to_representation(self):
         field = serializers.DecimalField(max_digits=2, decimal_places=1, localize=True)
         assert field.to_representation(Decimal('1.1')) == '1,1'
@@ -1464,15 +1464,24 @@ class TestDefaultTZDateTimeField(TestCase):
         cls.field = serializers.DateTimeField()
         cls.kolkata = pytz.timezone('Asia/Kolkata')
 
+    def assertUTC(self, tzinfo):
+        """
+        Check UTC for datetime.timezone, ZoneInfo, and pytz tzinfo instances.
+        """
+        assert (
+            tzinfo is utc or
+            (getattr(tzinfo, "key", None) or getattr(tzinfo, "zone", None)) == "UTC"
+        )
+
     def test_default_timezone(self):
-        assert self.field.default_timezone() == utc
+        self.assertUTC(self.field.default_timezone())
 
     def test_current_timezone(self):
-        assert self.field.default_timezone() == utc
+        self.assertUTC(self.field.default_timezone())
         activate(self.kolkata)
         assert self.field.default_timezone() == self.kolkata
         deactivate()
-        assert self.field.default_timezone() == utc
+        self.assertUTC(self.field.default_timezone())
 
 
 @pytest.mark.skipif(pytz is None, reason='pytz not installed')
@@ -2009,6 +2018,11 @@ class TestListField(FieldValues):
         with pytest.raises(serializers.ValidationError) as exc_info:
             field.to_internal_value(input_value)
         assert exc_info.value.detail == ['Expected a list of items but got type "dict".']
+
+    def test_constructor_misuse_raises(self):
+        # Test that `ListField` can only be instantiated with keyword arguments
+        with pytest.raises(TypeError):
+            serializers.ListField(serializers.CharField())
 
 
 class TestNestedListField(FieldValues):

@@ -168,7 +168,7 @@ Or to create a new user:
 
 Full documentation for the project is available at [https://www.django-rest-framework.org/][docs].
 
-For questions and support, use the [REST framework discussion group][group], or `#restframework` on freenode IRC.
+For questions and support, use the [REST framework discussion group][group], or `#restframework` on libera.chat IRC.
 
 You may also want to [follow the author on Twitter][twitter].
 
@@ -197,7 +197,7 @@ Please see the [security policy][security-policy].
 [bitio-img]: https://raw.githubusercontent.com/encode/django-rest-framework/master/docs/img/premium/bitio-readme.png
 
 [sentry-url]: https://getsentry.com/welcome/
-[stream-url]: https://getstream.io/try-the-api/?utm_source=drf&utm_medium=banner&utm_campaign=drf
+[stream-url]: https://getstream.io/?utm_source=drf&utm_medium=sponsorship&utm_content=developer
 [rollbar-url]: https://rollbar.com/?utm_source=django&utm_medium=sponsorship&utm_campaign=freetrial
 [esg-url]: https://software.esg-usa.com/
 [retool-url]: https://retool.com/?utm_source=djangorest&utm_medium=sponsorship
